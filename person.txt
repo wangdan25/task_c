@@ -1,0 +1,6 @@
+Lisa,13
+Aha,15
+Bob,12
+Cindy,15
+Joan,14
+Rose,19
