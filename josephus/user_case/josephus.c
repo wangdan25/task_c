@@ -4,16 +4,6 @@
 #include "josephus.h"
 #include "person.h"
 
-Person* create_josephus_person(char** data, int* n)
-{
-  Person* person = (Person*)malloc(*n*sizeof(Person));
-  for (int i=0;i<*n;i++)
-  {
-      person[i] = str_to_person(data[i]);
-  }
-  return person;
-}
-
 Person* out_people(Person* person, int* n, int step, int start)
 {
   Person* result = (Person*)malloc(*n*sizeof(Person));

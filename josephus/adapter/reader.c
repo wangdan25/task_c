@@ -57,13 +57,4 @@ void get_file_data(FILE* file, int* line, char** data)
 		data[i++] = line_data;
         memset(temp, 0, N);
   }
-
-}
-void show_data(char** data, int* len)
-{
-  int i =0;
-  for (i=0; i<(*len); i++)
-  {
-    printf("环里的人是：%s\n", data[i]);
-  }
 }

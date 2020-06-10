@@ -7,6 +7,8 @@ typedef struct person
     int age;
 }Person;
 
+Person* create_josephus_person(char** data, int* n);
 Person str_to_person(char* data);
+void show_people(Person* person, int* n);
 
 #endif
