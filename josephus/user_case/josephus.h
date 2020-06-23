@@ -3,6 +3,11 @@
 
 #include "person.h"
 
-Person* out_people(Person* person, int* n, int step, int start);
+typedef struct josephus josephus;
+
+josephus* josephus_new();
+int josephus_destroy(josephus* self);
+int josephus_init(josephus* self, char** data, int start, int step, int *len);
+int josephus_get_result(josephus *self, Person** result, int* n);
 
 #endif
