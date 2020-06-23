@@ -4,19 +4,41 @@
 
 #include "person.h"
 
-Person* create_josephus_person(char** data, int* n)
+#define SUCCESS 1
+#define N 100
+#define INVALID_AGE -1;
+
+struct Person
 {
-  Person* person = (Person*)malloc(*n*sizeof(Person));
-  for (int i=0;i<*n;i++)
-  {
-      person[i] = str_to_person(data[i]);
-  }
-  return person;
+    char name[10];
+    int age;
+};
+
+Person* person_new()
+{  
+  Person* self = malloc(N*sizeof(Person));  
+  return self;
 }
 
-Person str_to_person(char* data)
+void person_destroy(Person* self)
 {
-    Person person;
+  free(self->name);
+}
+
+int person_init(Person* self, char* name, int age)
+{
+  if (age < 0)
+  {
+    return INVALID_AGE;
+  }
+  self->age = age;
+  strcpy(self->name, name);
+  return SUCCESS;
+}
+
+Person* person_from_str(char* data)
+{
+    Person *self = person_new();
     char name[10] = {0};
     char age[3];
     int split_index = 0;
@@ -28,6 +50,7 @@ Person str_to_person(char* data)
             break;
         }
     }
+    
     for (int i = 0; i < split_index; i++)
     {
         name[i] = data[i];
@@ -37,17 +60,17 @@ Person str_to_person(char* data)
     {
         age[i] = data[i + split_index + 1];
     }
-    strcpy(person.name, name);
-    person.age = atoi(age);
-    return person;
+    int age1 = atoi(age);
+    person_init(self, name, age1);
+    return self;
 }
 
-void show_people(Person* person, int* n)
+void person_show(Person** person, int* n)
 {
   char age[3];
   for (int i=0;i<*n;i++)
   {
-    itoa(person[i].age, age, 10);
-    printf("名字是%s,年龄是%s\n", person[i].name, age);
+    itoa(person[i]->age, age, 10);
+    printf("名字是%s,年龄是%s\n", person[i]->name, age);
   }
 }

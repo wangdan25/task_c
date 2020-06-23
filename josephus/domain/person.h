@@ -1,14 +1,13 @@
 #ifndef PERSON_H
 #define PERSON_H
 
-typedef struct person
-{
-    char name[10];
-    int age;
-}Person;
+typedef struct Person Person;
 
-Person* create_josephus_person(char** data, int* n);
-Person str_to_person(char* data);
-void show_people(Person* person, int* n);
+Person* person_new();
+void person_destroy(Person* person);
+int person_create_josephus_ring(char** data, Person** person, int* n);
+// Person* person_from_str(char* data);
+Person* person_from_str(char* data);
+void person_show(Person** person, int* n);
 
 #endif
