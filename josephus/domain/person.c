@@ -14,6 +14,33 @@ struct Person
     int age;
 };
 
+Person** person_create_ring()
+{
+  Person** self = malloc(N*sizeof(Person*));  
+  return self; 
+}
+
+int person_destory_ring(Person** self)
+{
+  free(self);
+  return SUCCESS;
+}
+
+int person_ring(char** data, int *len)
+{
+  Person** ring = person_create_ring();
+    for (int i=0;i<*len;i++)
+  {
+    ring = person_from_str(data[i]);
+  }
+  return SUCCESS;
+}
+
+void person_ring_destroy(Person** self)
+{
+  free(self);
+}
+
 Person* person_new()
 {  
   Person* self = malloc(N*sizeof(Person));  
@@ -22,8 +49,9 @@ Person* person_new()
 
 void person_destroy(Person* self)
 {
-  free(self->name);
+  free(self);
 }
+
 
 int person_init(Person* self, char* name, int age)
 {
