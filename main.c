@@ -7,22 +7,37 @@
 
 int main()
 {
+    int len = 0;
+    char** data = reader_data_new();
+    reader("person.txt", data, &len);
+
+    Person** ring = malloc(100*sizeof(Person*));
+    for (int i= 0; i<len; i++)
+    {
+        ring[i] = person_from_str(data[i]);
+    }
+    printf("---------------ring--------------\n");
+    person_show(ring, &len);
+    printf("**********************************\n");
+
     int step, start;
     step = 2;
     start =1;
-    int len = 0;
     josephus* self = josephus_new();
-    char** data = reader_data_new();
-    reader("person.txt", data, &len);
-    josephus_init(self,data, start, step, &len);
-    // printf("约瑟夫环里原始的人是：\n");
-    // person_show(self->people, &len);
-    // printf("**********************************************\n");
+    josephus_init(self, start, step);
+    for (int i= 0; i<len; i++)
+    {
+        josephus_append(self, ring[i]);
+    }
+
     Person** result = malloc(100*sizeof(Person*));
-    josephus_get_result(self, result, &len);
-    printf("淘汰的人是：\n");
+    josephus_result(self, result, &len);
+    printf("---------------result--------------\n");
     person_show(result, &len);
+    printf("***********************************\n");
+
     reader_data_destroy(data);
+    free(ring);
     free(result);
     josephus_destroy(self);
     system("pause");
