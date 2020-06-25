@@ -3,36 +3,36 @@
 
 #include "josephus.h"
 #include "person.h"
+#include "m-array.h"
 
 #define N 100
 #define SUCCESS 1
 #define INVALID_START -1
 #define INVALID_STEP -2
 
+ARRAY_DEF (array_person, Person*, M_POD_OPLIST)
 
 struct josephus
 {
   int start;
   int step;
-  Person **people;
+  array_person_t people;
 };
 
 
 josephus* josephus_new()
 {
   josephus* self = malloc(N*sizeof(josephus));
-  self->people = malloc(N*sizeof(Person*));
   return self;
 }
  
 int josephus_destroy(josephus* self)
 {
   free(self);
-  free(self->people);
   return SUCCESS;
 }
 
-int josephus_init(josephus* self, char** data, int start, int step, int *len)
+int josephus_init(josephus* self, int start, int step)
 {
   if (start < 0)
   {
@@ -44,32 +44,38 @@ int josephus_init(josephus* self, char** data, int start, int step, int *len)
   }
   self->start = start;
   self->step = step;
-  for (int i=0;i<*len;i++)
-  {
-    self->people[i] = person_from_str(data[i]);
-  }
+  array_person_init(self->people);
   return SUCCESS;
 }
 
-int josephus_get_result(josephus *self, Person** result, int* n)
+int josephus_get_size(josephus* self)
 {
-  int nonzero_step, i, id_ = self->start-1;
-  int ring[10];
-  for (i = 0; i < *n; i++)
-    ring[i] = 1;
-  for (i = 0; i < *n; i++)
+  return array_person_size(self->people);
+}
+
+int josephus_append(josephus* self, Person* someone)
+{
+  array_person_push_back(self->people, someone);
+  return SUCCESS;
+}
+
+int josephus_pop(josephus* self, Person** target, int index)
+{
+  array_person_pop_at(target, self->people, index);
+  return SUCCESS;
+}
+
+int josephus_result(josephus *self, Person** result, int* n)
+{
+  int current_id = self->start - 1;
+  int length = array_person_size(self->people);
+
+  for (int i = 0; i<length; i++)
   {
-    nonzero_step = 0;
-    while (nonzero_step < self->step)
-    {
-      if (id_ == *n)
-        id_ = 0;
-      if (ring[id_])
-        nonzero_step++;
-      id_++;
-    }
-    ring[id_ - 1] = 0;
-    result[i] = self->people[id_ - 1];
+    current_id = (current_id + self->step - 1) % array_person_size(self->people);
+    result[i] = *(array_person_get(self->people, current_id));
+    array_person_pop_at(NULL, self->people, current_id);
   }
+  
   return SUCCESS;
 }

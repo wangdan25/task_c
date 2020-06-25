@@ -7,7 +7,11 @@ typedef struct josephus josephus;
 
 josephus* josephus_new();
 int josephus_destroy(josephus* self);
-int josephus_init(josephus* self, char** data, int start, int step, int *len);
-int josephus_get_result(josephus *self, Person** result, int* n);
+int josephus_init(josephus* self,int start, int step);
+int josephus_get_size(josephus* self);
+int josephus_append(josephus* self, Person* someone);
+int josephus_pop(josephus* self, Person** target, int index);
+int josephus_result(josephus *self, Person** result, int* n);
+
 
 #endif
