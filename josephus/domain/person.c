@@ -14,42 +14,16 @@ struct Person
     int age;
 };
 
-Person** person_create_ring()
-{
-  Person** self = malloc(N*sizeof(Person*));  
-  return self; 
-}
-
-int person_destory_ring(Person** self)
-{
-  free(self);
-  return SUCCESS;
-}
-
-int person_ring(char** data, int *len)
-{
-  Person** ring = person_create_ring();
-    for (int i=0;i<*len;i++)
-  {
-    ring = person_from_str(data[i]);
-  }
-  return SUCCESS;
-}
-
-void person_ring_destroy(Person** self)
-{
-  free(self);
-}
-
 Person* person_new()
 {  
   Person* self = malloc(N*sizeof(Person));  
   return self;
 }
 
-void person_destroy(Person* self)
+int person_destroy(Person* self)
 {
   free(self);
+  return SUCCESS;
 }
 
 
@@ -99,6 +73,6 @@ void person_show(Person** person, int* n)
   for (int i=0;i<*n;i++)
   {
     itoa(person[i]->age, age, 10);
-    printf("名字是%s,年龄是%s\n", person[i]->name, age);
+    printf("name: %s, age: %s\n", person[i]->name, age);
   }
 }
