@@ -8,8 +8,12 @@
 int main()
 {
     int len = 0;
-    char** data = reader_data_new();
-    reader("person.txt", data, &len);
+    Reader* reader = reader_new();
+    char* path = "person.txt";
+    reader_get_line(path, &len);
+    reader_init(reader, path, len);
+    char** data = malloc(500*sizeof(char*));
+    reader_get_file_data(reader, data);
 
     Person** ring = malloc(100*sizeof(Person*));
     for (int i= 0; i<len; i++)
@@ -46,9 +50,10 @@ int main()
     }
     printf("***********************************\n");
 
-    reader_data_destroy(data);
     free(ring);
     free(result);
+    free(data);
+    reader_destroy(reader);
     josephus_destroy(self);
     system("pause");
     return 0;
