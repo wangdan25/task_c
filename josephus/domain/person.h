@@ -6,6 +6,7 @@ typedef struct Person Person;
 Person* person_new();
 int person_destroy(Person* person);
 Person* person_from_str(char* data);
-void person_show(Person** person, int* n);
+char* person_get_name(Person* self);
+int person_get_age(Person* self);
 
 #endif

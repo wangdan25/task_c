@@ -17,7 +17,12 @@ int main()
         ring[i] = person_from_str(data[i]);
     }
     printf("---------------ring--------------\n");
-    person_show(ring, &len);
+    for (int i = 0;i < len; i++)
+    {
+        char* name = person_get_name(ring[i]);
+        int age = person_get_age(ring[i]);
+        printf("name: %s, age: %d\n", name, age);
+    }
     printf("**********************************\n");
 
     int step, start;
@@ -33,7 +38,12 @@ int main()
     Person** result = malloc(100*sizeof(Person*));
     josephus_result(self, result, &len);
     printf("---------------result--------------\n");
-    person_show(result, &len);
+    for (int i = 0;i < len; i++)
+    {
+        char* name = person_get_name(result[i]);
+        int age = person_get_age(result[i]);
+        printf("name: %s, age: %d\n", name, age);
+    }
     printf("***********************************\n");
 
     reader_data_destroy(data);

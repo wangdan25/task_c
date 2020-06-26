@@ -67,12 +67,12 @@ Person* person_from_str(char* data)
     return self;
 }
 
-void person_show(Person** person, int* n)
+char* person_get_name(Person* self)
 {
-  char age[3];
-  for (int i=0;i<*n;i++)
-  {
-    itoa(person[i]->age, age, 10);
-    printf("name: %s, age: %s\n", person[i]->name, age);
-  }
+  return self->name;
+}
+
+int person_get_age(Person* self)
+{
+  return self->age;
 }
